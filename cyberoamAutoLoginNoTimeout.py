@@ -2,6 +2,7 @@
 author: Vivek Gover and Vidhin Parmar
 A cyberoam client emulator that automatically logs in after every 2 hours.
 Enter your username and password before running the script.
+If you're from a different institute, change the URL to your institute's Cyberoam URL
 Press ctrl-c to logout.
 """
 # This code runs in python3 only
