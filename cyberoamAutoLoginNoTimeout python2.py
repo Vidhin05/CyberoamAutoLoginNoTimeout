@@ -1,11 +1,13 @@
 """
-author:Vidhin
+author : Vidhin Parmar
+E-mail : ividhin@gmail.com
 A cyberoam client emulator that automatically logs in after every 2 hours.
-Enter your username and password before running the script.
-If you're from a different institute, change the URL to your institute's Cyberoam URL.
+Enter your credentials before running the script.
+If you're from a different institute, replace the URL by your institute's Cyberoam URL.
 Press ctrl-c to logout.
+Press ctrl-\ to exit without quitting.
 """
-# This code runs in python2 only
+# This code uses python2
 
 import cookielib
 import re
@@ -19,13 +21,16 @@ import mechanize
 from bs4 import BeautifulSoup
 
 # Enter your login credentials here.
-username = "your_username"
-password = "your_password"
+credentials = ("your_username" , "your_password")
 
 
 # logout once an interrupt is received.
-def signal_handler(signal, frame):
-    logout()
+def signal_handler1(signal, frame):
+    logoff()
+    sys.exit(0)
+
+
+def signal_handler2(signal, frame):
     sys.exit(0)
 
 
@@ -50,15 +55,10 @@ def browser():
     return br
 
 
-def post_request(username, password, value, mode):
+def post_request(credentials[0], credentials[1], value, mode):
     br = browser()
     # POST request values
-    values = {
-        "mode": mode,
-        "username": username,
-        "password": password,
-        "btnSubmit": value
-    }
+    values = {"mode": mode, "username": credentials[0], "password": credentials[1], "btnSubmit": value}
 
     data = urllib.urlencode(values)
     page = br.open(url, data)
@@ -69,17 +69,17 @@ def post_request(username, password, value, mode):
     regex = re.compile(r"<message><!\[CDATA\[(.*)\]\]><\/message>")
 
     x = re.search(regex, response)
-    print username + ": " + x.group(1)
+    print credentials[0] + ": " + x.group(1)
     return br
 
 
 def login():
-    br = post_request(username, password, "Login", "191")
+    br = post_request(credentials[0], credentials[1], "Login", "191")
     return br
 
 
 def logout():
-    br = post_request(username, password, "Logout", "193")
+    br = post_request(credentials[0], credentials[1], "Logout", "193")
     return br
 
 
@@ -98,7 +98,8 @@ def bypass_ssl():
 
 def main():
     bypass_ssl()
-    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGINT, signal_handler1)
+    signal.signal(signal.SIGQUIT, signal_handler2)
 
     while True:
         login()
