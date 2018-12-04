@@ -1,7 +1,5 @@
 Cyberoam/Domain-user passsword change through CMD
-Go to directory containing passwd.exe
-
-Enter the following command:
-passwd -i -u 200****** -d DA-IICT
-
-  
+1. Go to directory containing passwd.exe
+2. Enter the following command:
+   passwd -i -u "YourUsername" -d DA-IICT
+3. Follow on screen instructions.

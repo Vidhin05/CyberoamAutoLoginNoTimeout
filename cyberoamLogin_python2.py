@@ -1,6 +1,7 @@
 """
 author : Vidhin Parmar
 E-mail : ividhin@gmail.com
+Github Username: Vidhin05
 A cyberoam client emulator that automatically logs in after every 2 hours.
 Enter your credentials before running the script.
 If you're from a different institute, replace the URL by your institute's Cyberoam URL.
